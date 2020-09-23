@@ -1,0 +1,14 @@
+public class AmountFieldCheckApex {
+    public static void AmountFieldCheck(list<opportunity>opp){
+        list<Id> opIds = new list<Id>();
+        for(Opportunity opper:opp){
+            if (opper.Amount > 20000 && opper.AccountId !=NULL){
+                opIds.add(opper.AccountId);
+        }
+    }
+        List<Account> acct = new List<Account>([select Id, is_gold__c From Account where Id IN:opIds]);
+        for(Account a1 : acct){
+            a1.is_gold__c=true;
+            update a1;
+        }
+}

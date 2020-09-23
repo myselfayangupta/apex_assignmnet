@@ -1,0 +1,33 @@
+public class ContactUpdate {
+    public static void CreateNewContact(List<Account> accountList){
+        List<Contact> conList = new List<Contact>();
+        for(Account acc : accountList){
+            Contact contact = new Contact(AccountId = acc.Id);
+            List<String> nameString = acc.Name.split(' ');
+            if(nameString.size()>0){
+                contact.LastName = nameString[0];
+            }
+            if(nameString.size()>1){
+                contact.FirstName = nameString[1];
+            }
+            contact.Email = 'info@websitedomain.tld';
+            contact.Only_Default_Contact__c = TRUE;
+            conList.add(con);
+        }
+        update conList;
+    }
+}
+
+public static void AccountCheckBoxUpdate(List<Contact> contactList){
+    Set<Id> accountIds = new Set<Id>();
+    for(Contact con : contactList){
+        accountIds.add(con.AccountId);
+    }
+    List<Account> updatedAccounts = new List<Account>();
+    for(AggregateResult arr : [select count(id) , AccountId from Contact where AccountId IN :accountIds group by AccountId having count(id)  >1 ]){
+        updatedAccounts.add(new Account(Id = (Id)arr.get('AccountId'), Only_Default_Contact__c=false));
+    }
+    if(!updatedAccounts.isEmpty())
+        update updatedAccounts;
+    
+}

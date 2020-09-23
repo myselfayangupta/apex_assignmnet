@@ -1,0 +1,18 @@
+public class Update_AmountApex {
+    public static void Update_Amount(list<Account>acclist){
+        Set<Id> Account_Id_Set = new Set<Id>();
+        list<contact> conlist = new list<contact>();
+        for(Account ac : acclist){
+            if(ac.website != null){
+                Account_Id_Set.add(ac.id);
+            }
+        }
+        if(AccountId_Set.size()>0){
+            List<Contact> con = [select Id,Firstname,Lastname,Profile__c,Accountid,Account.website from contact where Accountid in :i
+            for(Contact contact_list : con){
+                contact_list.Profile__c= contact_list.account.website + '/' + contact_list.firstname.left(1) + contact_list.lastname;
+                update contact_List;
+            }
+        }
+    }
+}
