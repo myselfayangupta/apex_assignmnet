@@ -1,0 +1,19 @@
+trigger Update_Amount on Account (after Update) {
+    if(Trigger.isAfter && Trigger.isUpdate){
+        Set<Id> Account_Id_Set = new Set<Id>();
+        list<contact> conlist = new list<contact>();
+        for(Account ac : trigger.new){
+            if(ac.website != null){
+                Account_Id_Set.add(ac.id);
+            }
+        }
+        if(AccountId_Set.size()>0){
+            for(Contact contact_list : [select id,firstname,lastname,Profile__c,account.website from contact where accountid in :Account_Id_Set]){
+                contact_list.Profile__c= contact_list.account.website + '/' + contact_list.firstname.left(1) + contact_list.lastname;
+                update contact_List;
+            }
+        }
+    }
+    
+}
+

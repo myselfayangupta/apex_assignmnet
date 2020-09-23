@@ -1,0 +1,17 @@
+trigger AmountFieldCheck on Opportunity (after insert, after update) {
+    If(Trigger.isAfter && Trigger.isUpdate){
+        list<Id> opIds = new list<Id>();
+        for(opportunity o:trigger.new){
+            if (o.Amount > 20000 && o.AccountId !=NULL){
+                opIds.add(o.AccountId);
+            }
+        }
+    }
+    If(Trigger.isAfter && Trigger.isUpdate){
+        List<Account> acct = new List<Account>([select Id, is_gold__c From Account where Id IN:opIds]);
+        for(Account a1 : acct){
+            a1.is_gold__c=true;
+            update a1;
+        }
+    }
+}
