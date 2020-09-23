@@ -1,0 +1,14 @@
+@isTest
+public class AmountFieldCheckApexTest {
+    @isTest
+    public static void AmountFieldCheckApex(){
+        Account a1=new Account(Name='Test Class',First_Name='Is',Last_Name='Gold');
+        insert a1;
+        Opportunity opper=new Opportunity(Name='Oppu class',AccountId=a1.Id,CloseDate=Date.newInstance(2020, 09, 30),Amount=20000);
+        insert opper;
+        Test.startTest();
+        o.Amount=73534;
+        Update opper;
+        Test.stopTest();
+    }
+}

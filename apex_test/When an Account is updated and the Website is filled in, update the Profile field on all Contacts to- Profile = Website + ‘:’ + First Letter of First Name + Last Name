@@ -1,0 +1,24 @@
+@isTest
+public class Update_AmountApexTest {
+    @isTest
+    public static void Update_AmountApex(){
+        Account oldAcc = new Account(Name='Profile',First_Name='Ayan',Last_Name='Gupta');
+        insert oldAcc;
+        Contact oldCon=new Contact(FirstName='Myan',LastName='Gupta',AccountId=oldAcc.Id);
+        insert oldCon;
+        Test.startTest();
+        oldAcc.Website='www.gmail.com';
+        update oldAcc;
+        Test.stopTest();
+    }
+    @isTest
+    private static void Not_Update(){
+        Account newAcc = new Account(Name='Test Account',First_Name='ABC',Last_Name='Gupta');
+        insert newAcc;
+        Contact newCon=new Contact(FirstName='XYZ',LastName='Gupta',AccountId=newAcc.Id);
+        insert newCon;
+        Test.startTest();
+        System.assertEquals(null, newCon.Profile__c);
+        Test.stopTest();
+    }
+}
